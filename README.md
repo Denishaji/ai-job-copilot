@@ -6,11 +6,11 @@ Job Match & ATS Helper is a small end‑to‑end web app that helps you quickly 
 
 ## 1. UI preview
 
-Main web UI:
+- **Main web UI:**
 
 ![Job Match & ATS Helper UI](frontend/Web_UI.png)
 
-Example analysis:
+- **Example analysis:**
 
 ![Analysis Results](frontend/Analysis_Result.png)
 
@@ -93,17 +93,15 @@ Example analysis:
 ├─ docker-compose.yml           # Orchestrates backend + frontend
 └─ README.md
 ```
-
+---
 ## 5. Running locally (plain Python)
 
 This mode is ideal while actively developing the backend and frontend.
 
 ### 5.1 Prerequisites
-*Python 3.11+
-
-*pip and venv (or conda)
-
-An OpenAI API key with access to ChatCompletion models
+- Python 3.11+
+- pip and venv (or conda)
+- An OpenAI API key with access to ChatCompletion models
 
 ### 5.2 Backend setup
 ```bash
@@ -116,15 +114,20 @@ python -m venv .venv
 # macOS / Linux:
 source .venv/bin/activate
 ```
- Install dependencies
+ **Install dependencies:**
+```bash
 pip install -r requirements.txt
-
- Set your OpenAI API key
- Windows PowerShell:
+```
+ **Set your OpenAI API key**
+ - Windows PowerShell:
+ ```bash
    $Env:OPENAI_API_KEY="your_api_key_here"
- macOS / Linux:
+```
+ - macOS / Linux:
+ ```bash
 export OPENAI_API_KEY="your_api_key_here"
-Run the FastAPI server on port 8001:
+```
+**Run the FastAPI server on port 8001:**
 
 ```bash
 uvicorn app.main:app --reload --port 8001
@@ -148,15 +151,18 @@ In this plain‑Python mode, frontend/main.js should use:
 ```bash 
 const BACKEND_BASE_URL = "http://127.0.0.1:8001";
 ```
+---
 ## 6. Running with Docker
+
 If you prefer a fully containerized setup, you can run both services via Docker Compose.
 
 ### 6.1 Prerequisites
-*Docker Desktop (or Docker Engine + docker‑compose)
 
-*OpenAI API key
+- Docker Desktop (or Docker Engine + docker‑compose)
+- OpenAI API key
 
 ## 6.2 Environment
+
 Export your API key in the shell (or put the same variable into a .env file read by Docker Compose):
 
 ```bash
@@ -166,6 +172,7 @@ Export your API key in the shell (or put the same variable into a .env file read
 export OPENAI_API_KEY="your_api_key_here"
 ```
 ### 6.3 Start the stack
+
 From the repo root:
 ```bash
 docker compose up --build
@@ -174,11 +181,11 @@ Open:
 Frontend UI: http://localhost:5500
 Backend docs (optional): http://localhost:8001/docs
 
-Docker setup in Docker Desktop:
+- **Docker setup in Docker Desktop:**
 
 ![Docker Compose Stack](frontend/Docker_Compose_Stack.png)
 
-Backend & frontend containers:
+- **Backend & frontend containers:**
 
 ![Backend & Frontend Containers](frontend/Bck_n_Frnt_Con.png)
 
@@ -187,30 +194,27 @@ Backend & frontend containers:
 ```bash
 docker compose down
 ```
+---
 ## 7. Development notes
-*The LLM prompt and output schema live in the backend, so you can:
-Adjust scoring logic.
-*Add new fields (e.g., seniority estimate, interview questions, red flags).
 
-Because the UI is plain HTML + JS, you can:
+- The LLM prompt and output schema live in the backend, so you can:
+    - Adjust scoring logic.
+    - Add new fields (e.g., seniority estimate, interview questions, red flags).
+- Because the UI is plain HTML + JS, you can:
+    - Change the backend URL to point to any compatible API.
+    - Re‑use the same UI inside a Chrome extension later.
+- Docker support makes it straightforward to:
+    - Run the app on another machine with minimal setup.
+    - Share a “clone, set API key, docker compose up” experience.
 
-*Change the backend URL to point to any compatible API.
-
-*Re‑use the same UI inside a Chrome extension later.
-
-*Docker support makes it straightforward to:
-
-*Run the app on another machine with minimal setup.
-
-*Share a “clone, set API key, docker compose up” experience.
+---
 
 ## 8. Roadmap / ideas
-*Add authentication and user‑specific history.
-
-*Support multiple resumes and choose the best one per JD.
-
-*Integrate a browser extension to auto‑grab JDs from LinkedIn.
-
-*Deploy a shared demo using a PaaS (Render, Fly.io, etc.) with BYO OpenAI key.
+- Add authentication and user‑specific history.
+- Support multiple resumes and choose the best one per JD.
+- Integrate a browser extension to auto‑grab JDs from LinkedIn.
+- Deploy a shared demo using a PaaS (Render, Fly.io, etc.) with BYO OpenAI key.
 
 If you try this project and have feedback or ideas, feel free to open an issue or reach out.
+
+---
