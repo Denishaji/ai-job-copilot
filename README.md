@@ -94,18 +94,18 @@ Example analysis:
 └─ README.md
 ```
 
-# # 5. Running locally (plain Python)
+## 5. Running locally (plain Python)
 
 This mode is ideal while actively developing the backend and frontend.
 
-# # # 5.1 Prerequisites
+### 5.1 Prerequisites
 *Python 3.11+
 
 *pip and venv (or conda)
 
 An OpenAI API key with access to ChatCompletion models
 
-# # # 5.2 Backend setup
+### 5.2 Backend setup
 ```bash
 # From repo root
 cd backend
@@ -135,7 +135,7 @@ You can verify it with:
 
 *Health check: http://127.0.0.1:8001/health
 
-# # # 5.3 Frontend setup
+### 5.3 Frontend setup
 In a separate terminal:
 
 ```bash
@@ -148,15 +148,15 @@ In this plain‑Python mode, frontend/main.js should use:
 ```bash 
 const BACKEND_BASE_URL = "http://127.0.0.1:8001";
 ```
-# # 6. Running with Docker
+## 6. Running with Docker
 If you prefer a fully containerized setup, you can run both services via Docker Compose.
 
-# # # 6.1 Prerequisites
+### 6.1 Prerequisites
 *Docker Desktop (or Docker Engine + docker‑compose)
 
 *OpenAI API key
 
-# # 6.2 Environment
+## 6.2 Environment
 Export your API key in the shell (or put the same variable into a .env file read by Docker Compose):
 
 ```bash
@@ -165,7 +165,7 @@ Export your API key in the shell (or put the same variable into a .env file read
 # macOS / Linux:
 export OPENAI_API_KEY="your_api_key_here"
 ```
-# # # 6.3 Start the stack
+### 6.3 Start the stack
 From the repo root:
 ```bash
 docker compose up --build
@@ -183,11 +183,11 @@ Backend & frontend containers:
 ![Backend & Frontend Containers](frontend/Bck_n_Frnt_Con.png)
 
 
-# # 6.4 Stop the stack
+## 6.4 Stop the stack
 ```bash
 docker compose down
 ```
-# # 7. Development notes
+## 7. Development notes
 *The LLM prompt and output schema live in the backend, so you can:
 Adjust scoring logic.
 *Add new fields (e.g., seniority estimate, interview questions, red flags).
@@ -204,7 +204,7 @@ Because the UI is plain HTML + JS, you can:
 
 *Share a “clone, set API key, docker compose up” experience.
 
-# # 8. Roadmap / ideas
+## 8. Roadmap / ideas
 *Add authentication and user‑specific history.
 
 *Support multiple resumes and choose the best one per JD.
