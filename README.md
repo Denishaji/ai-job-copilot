@@ -1,7 +1,6 @@
 # Job Match & ATS Helper
 
-Job Match & ATS Helper is a small end‑to‑end web app that helps you quickly check how well your resume matches a job description.  
-Upload a PDF resume, paste a JD, and get a match score, ATS score, skills breakdown, and concrete resume suggestions in seconds.
+Job Match & ATS Helper is a small end‑to‑end web app that helps you quickly check how well your resume matches a job description. Upload a PDF resume, paste a JD, and get a match score, ATS score, skills breakdown, and concrete resume suggestions in seconds.
 
 ---
 
@@ -93,85 +92,86 @@ Example analysis:
 │
 ├─ docker-compose.yml           # Orchestrates backend + frontend
 └─ README.md
+```
 
+# # 5. Running locally (plain Python)
 
-5. Running locally (plain Python)
 This mode is ideal while actively developing the backend and frontend.
 
-5.1 Prerequisites
-Python 3.11+
+# # # 5.1 Prerequisites
+*Python 3.11+
 
-pip and venv (or conda)
+*pip and venv (or conda)
 
 An OpenAI API key with access to ChatCompletion models
 
-5.2 Backend setup
-bash
+# # # 5.2 Backend setup
+```bash
 # From repo root
 cd backend
-
 # (Optional) create a virtual environment
 python -m venv .venv
 # Windows:
 #   .venv\Scripts\activate
 # macOS / Linux:
 source .venv/bin/activate
-
-# Install dependencies
+```
+ Install dependencies
 pip install -r requirements.txt
 
-# Set your OpenAI API key
-# Windows PowerShell:
-#   $Env:OPENAI_API_KEY="your_api_key_here"
-# macOS / Linux:
+ Set your OpenAI API key
+ Windows PowerShell:
+   $Env:OPENAI_API_KEY="your_api_key_here"
+ macOS / Linux:
 export OPENAI_API_KEY="your_api_key_here"
 Run the FastAPI server on port 8001:
 
-bash
+```bash
 uvicorn app.main:app --reload --port 8001
+```
 You can verify it with:
 
-API docs: http://127.0.0.1:8001/docs
+*API docs: http://127.0.0.1:8001/docs
 
-Health check: http://127.0.0.1:8001/health
+*Health check: http://127.0.0.1:8001/health
 
-5.3 Frontend setup
+# # # 5.3 Frontend setup
 In a separate terminal:
 
-bash
+```bash
 cd frontend
 python -m http.server 5500
+```
 Open the UI at: http://localhost:5500
 
 In this plain‑Python mode, frontend/main.js should use:
-
-js
+```bash 
 const BACKEND_BASE_URL = "http://127.0.0.1:8001";
-6. Running with Docker
+```
+# # 6. Running with Docker
 If you prefer a fully containerized setup, you can run both services via Docker Compose.
 
-6.1 Prerequisites
-Docker Desktop (or Docker Engine + docker‑compose)
+# # # 6.1 Prerequisites
+*Docker Desktop (or Docker Engine + docker‑compose)
 
-OpenAI API key
+*OpenAI API key
 
-6.2 Environment
+# # 6.2 Environment
 Export your API key in the shell (or put the same variable into a .env file read by Docker Compose):
 
-bash
+```bash
 # Windows PowerShell:
 #   $Env:OPENAI_API_KEY="your_api_key_here"
 # macOS / Linux:
 export OPENAI_API_KEY="your_api_key_here"
-6.3 Start the stack
+```
+# # # 6.3 Start the stack
 From the repo root:
-
-bash
+```bash
 docker compose up --build
+```
 Open:
-
 Frontend UI: http://localhost:5500
-
 Backend docs (optional): http://localhost:8001/docs
 
 Docker setup in Docker Desktop:
@@ -183,39 +183,34 @@ Backend & frontend containers:
 ![Backend & Frontend Containers](frontend/Bck_n_Frnt_Con.png)
 
 
-Backend and frontend containers:
-
-Backend & Frontend Containers
-
-6.4 Stop the stack
-bash
+# # 6.4 Stop the stack
+```bash
 docker compose down
-7. Development notes
-The LLM prompt and output schema live in the backend, so you can:
-
+```
+# # 7. Development notes
+*The LLM prompt and output schema live in the backend, so you can:
 Adjust scoring logic.
-
-Add new fields (e.g., seniority estimate, interview questions, red flags).
+*Add new fields (e.g., seniority estimate, interview questions, red flags).
 
 Because the UI is plain HTML + JS, you can:
 
-Change the backend URL to point to any compatible API.
+*Change the backend URL to point to any compatible API.
 
-Re‑use the same UI inside a Chrome extension later.
+*Re‑use the same UI inside a Chrome extension later.
 
-Docker support makes it straightforward to:
+*Docker support makes it straightforward to:
 
-Run the app on another machine with minimal setup.
+*Run the app on another machine with minimal setup.
 
-Share a “clone, set API key, docker compose up” experience.
+*Share a “clone, set API key, docker compose up” experience.
 
-8. Roadmap / ideas
-Add authentication and user‑specific history.
+# # 8. Roadmap / ideas
+*Add authentication and user‑specific history.
 
-Support multiple resumes and choose the best one per JD.
+*Support multiple resumes and choose the best one per JD.
 
-Integrate a browser extension to auto‑grab JDs from LinkedIn.
+*Integrate a browser extension to auto‑grab JDs from LinkedIn.
 
-Deploy a shared demo using a PaaS (Render, Fly.io, etc.) with BYO OpenAI key.
+*Deploy a shared demo using a PaaS (Render, Fly.io, etc.) with BYO OpenAI key.
 
 If you try this project and have feedback or ideas, feel free to open an issue or reach out.
