@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Job Match & ATS Helper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #0f172a;
+      color: #e5e7eb;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-size: 1.2rem;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    p {
+      margin-top: 4px;
+      margin-bottom: 12px;
+      color: #9ca3af;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .card {
+      background-color: #020617;
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid #1f2937;
+    }
+    label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 160px;
+      resize: vertical;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #1f2937;
+      background-color: #020617;
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      font-family: monospace;
+      box-sizing: border-box;
+    }
+    input[type="file"] {
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+    button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .btn-primary {
+      background-color: #3b82f6;
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: #2563eb;
+    }
+    .btn-secondary {
+      background-color: #111827;
+      color: #e5e7eb;
+      border: 1px solid #1f2937;
+    }
+    .btn-secondary:hover {
+      background-color: #1f2937;
+    }
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background-color: #111827;
+      border: 1px solid #1f2937;
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+    .score-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .score-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background-color: #111827;
+      border: 1px solid #1f2937;
+      font-size: 0.8rem;
+    }
+    .score-pill strong {
+      margin-right: 4px;
+    }
+    ul {
+      padding-left: 20px;
+      margin-top: 4px;
+      margin-bottom: 8px;
+    }
+    #status {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+    @media (max-width: 900px) {
+      .grid, .result-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Job Match & ATS Helper</h1>
+    <p>Upload your resume, paste a job description, and get match score, ATS score, skills breakdown, and resume suggestions.</p>
+
+    <div class="grid">
+      <!-- Resume side -->
+      <div class="card">
+        <h2>1. Upload your resume (PDF)</h2>
+        <label for="resume-file">Choose PDF file</label>
+        <input type="file" id="resume-file" accept="application/pdf" />
+        <div class="actions">
+          <button id="upload-resume-btn" class="btn-secondary">Extract text</button>
+          <button id="clear-resume-btn" class="btn-secondary">Clear resume text</button>
+        </div>
+        <p>Extracted resume text (you can edit it):</p>
+        <textarea id="resume-text" placeholder="Extracted resume text will appear here..."></textarea>
+      </div>
+
+      <!-- Job description side -->
+      <div class="card">
+        <h2>2. Paste job description</h2>
+        <label for="jd-text">Job description</label>
+        <textarea id="jd-text" placeholder="Paste a job description here..."></textarea>
+        <div class="actions">
+          <button id="analyze-btn" class="btn-primary">Analyze match</button>
+          <span id="status"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result area -->
+    <div class="card">
+      <h2>3. Results</h2>
+      <div id="result-empty">Run an analysis to see results here.</div>
+      <div id="result-content" style="display: none;">
+        <div class="score-row">
+          <div class="score-pill">
+            <strong>Match score:</strong> <span id="match-score"></span> (<span id="match-level"></span>)
+          </div>
+          <div class="score-pill">
+            <strong>ATS score:</strong> <span id="ats-score"></span>
+          </div>
+        </div>
+        <p id="analysis-text"></p>
+
+        <div class="result-grid">
+          <div>
+            <h3>Matched skills</h3>
+            <div id="matched-skills"></div>
+
+            <h3>Missing skills</h3>
+            <div id="missing-skills"></div>
+          </div>
+          <div>
+            <h3>Resume suggestions</h3>
+            <ul id="resume-suggestions"></ul>
+
+            <h3>Extra resume keywords</h3>
+            <div id="extra-keywords"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

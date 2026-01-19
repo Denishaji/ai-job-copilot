@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pytest_cache/
+*.sqlite3
+
+# Environments
+.venv/
+venv/
+env/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Byte-compiled / compiled
+*.so
+
+# Local config
+.env
+.env.*
+*.local
+
+# Docker
+*.pid
+*.seed
